@@ -37,6 +37,7 @@
   ],
   "scripts": {
     "build": "tsc --build .",
+    "prepare": "pnpm build",
     "lint": "pnpm eslint && pnpm prettier --check",
     "postlint": "pnpm api-extractor",
     "lint:fix": "pnpm eslint --fix && pnpm prettier --write",

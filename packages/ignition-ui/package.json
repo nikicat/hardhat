@@ -11,6 +11,7 @@
     "predev": "pnpm regenerate-deployment-example",
     "dev": "vite --force",
     "build": "tsc --build .",
+    "prepare": "pnpm build",
     "pretest": "pnpm build",
     "test": "mocha --recursive \"test/**/*.ts\"",
     "test:coverage": "nyc mocha --recursive \"test/**/*.ts\"",

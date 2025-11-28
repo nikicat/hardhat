@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "build": "tsc --build tsconfig.json",
+    "prepare": "pnpm build",
     "lint": "pnpm eslint && pnpm prettier --check",
     "lint:fix": "pnpm eslint --fix && pnpm prettier --write",
     "preeslint": "pnpm test-build",
