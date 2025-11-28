@@ -3335,6 +3335,58 @@ describe("NetworkManagerImplementation", () => {
         });
       });
     });
+
+    describe("logger", () => {
+      describe("edr config", () => {
+        it("should validate a valid network config", async () => {
+          let validationErrors = await validateNetworkUserConfig(
+            edrConfig({
+              logger: {
+                enabled: true,
+              },
+            }),
+          );
+
+          assertValidationErrors(validationErrors, []);
+
+          validationErrors = await validateNetworkUserConfig(
+            edrConfig({
+              logger: {
+                enabled: false,
+                printLineFn: () => {},
+                replaceLastLineFn: () => {},
+              },
+            }),
+          );
+
+          assertValidationErrors(validationErrors, []);
+        });
+
+        it("should not validate an invalid network config", async () => {
+          let validationErrors = await validateNetworkUserConfig(
+            edrConfig({ logger: "incorrect" }),
+          );
+
+          assertValidationErrors(validationErrors, [
+            {
+              path: ["networks", "hardhat", "logger"],
+              message: "Expected object, received string",
+            },
+          ]);
+
+          validationErrors = await validateNetworkUserConfig(
+            edrConfig({ logger: { enabled: "incorrect" } }),
+          );
+
+          assertValidationErrors(validationErrors, [
+            {
+              path: ["networks", "hardhat", "logger", "enabled"],
+              message: "Expected boolean, received string",
+            },
+          ]);
+        });
+      });
+    });
   });
 
   describe("ContractDecoder caching", () => {

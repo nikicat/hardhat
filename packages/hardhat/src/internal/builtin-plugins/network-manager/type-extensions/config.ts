@@ -1,4 +1,5 @@
 import type { ChainType, DefaultChainType } from "../../../../types/network.js";
+import type { LoggerConfig } from "../edr/types/logger.js";
 
 declare module "../../../../types/config.js" {
   export interface HardhatUserConfig {
@@ -124,6 +125,7 @@ declare module "../../../../types/config.js" {
     throwOnCallFailures?: boolean;
     throwOnTransactionFailures?: boolean;
     transactionGasCap?: number | bigint | false;
+    logger?: LoggerConfig;
   }
 
   export type EdrNetworkAccountsUserConfig =
@@ -270,6 +272,7 @@ declare module "../../../../types/config.js" {
     throwOnCallFailures: boolean;
     throwOnTransactionFailures: boolean;
     transactionGasCap?: bigint | false;
+    logger?: LoggerConfig;
   }
 
   export type EdrNetworkAccountsConfig =

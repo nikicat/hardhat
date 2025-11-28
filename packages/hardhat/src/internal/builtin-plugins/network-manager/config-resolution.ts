@@ -116,6 +116,7 @@ export function resolveEdrNetwork(
       typeof networkConfig.transactionGasCap === "bigint"
         ? toBigInt(networkConfig.transactionGasCap)
         : networkConfig.transactionGasCap,
+    logger: networkConfig.logger,
   };
 }
 

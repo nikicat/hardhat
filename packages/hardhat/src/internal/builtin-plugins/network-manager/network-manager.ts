@@ -371,6 +371,7 @@ export class NetworkManagerImplementation implements NetworkManager {
           contractDecoder: this.#contractDecoder,
           coverageConfig,
           gasReportConfig,
+          loggerConfig: resolvedNetworkConfig.logger,
           includeCallTraces,
           connectionId: networkConnection.id,
           networkName: networkConnection.networkName,

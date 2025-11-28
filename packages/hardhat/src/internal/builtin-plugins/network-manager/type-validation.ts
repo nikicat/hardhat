@@ -303,6 +303,12 @@ const edrNetworkMiningUserConfigSchema = z.object({
   mempool: z.optional(edrNetworkMempoolUserConfigSchema),
 });
 
+const loggerConfigSchema = z.object({
+  enabled: z.boolean().default(false),
+  printLineFn: z.optional(z.any()),
+  replaceLastLineFn: z.optional(z.any()),
+});
+
 const edrNetworkUserConfigSchema = z.object({
   type: z.literal("edr-simulated"),
   accounts: z.optional(edrNetworkAccountsUserConfigSchema),
@@ -331,6 +337,7 @@ const edrNetworkUserConfigSchema = z.object({
   throwOnCallFailures: z.optional(z.boolean()),
   throwOnTransactionFailures: z.optional(z.boolean()),
   transactionGasCap: z.optional(gasLimitWithDisableUserConfigSchema),
+  logger: z.optional(loggerConfigSchema),
 });
 
 const networkUserConfigSchema = z.discriminatedUnion("type", [
