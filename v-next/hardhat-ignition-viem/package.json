@@ -27,6 +27,7 @@
   "scripts": {
     "prebuild": "pnpm run --dir ../hardhat-viem build && node ./scripts/compile-test-fixture-project.js create2 && node ./scripts/compile-test-fixture-project.js minimal",
     "build": "tsc --build .",
+    "prepare": "pnpm build",
     "lint": "pnpm prettier --check && pnpm eslint",
     "lint:fix": "pnpm prettier --write && pnpm eslint --fix",
     "eslint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",

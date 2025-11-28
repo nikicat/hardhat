@@ -34,6 +34,7 @@
     "pretest": "pnpm build",
     "pretest:only": "pnpm build",
     "build": "tsc --build .",
+    "prepare": "pnpm build",
     "prepublishOnly": "pnpm build",
     "clean": "rimraf dist"
   },
