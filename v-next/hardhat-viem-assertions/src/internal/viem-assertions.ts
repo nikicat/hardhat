@@ -1,4 +1,5 @@
 import type { HardhatViemAssertions } from "../types.js";
+import type { BalanceChangeChecker } from "./assertions/balances-have-changed.js";
 import type {
   ContractAbis,
   ContractReturnType,
@@ -35,7 +36,7 @@ export class HardhatViemAssertionsImpl<
     resolvedTxHash: Promise<Hash>,
     changes: Array<{
       address: Address;
-      amount: bigint;
+      amount: bigint | BalanceChangeChecker;
     }>,
   ): Promise<void> {
     return balancesHaveChanged(this.#viem, resolvedTxHash, changes);
