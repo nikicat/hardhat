@@ -6,6 +6,8 @@ import assert from "node:assert/strict";
 
 import { isHash } from "@nomicfoundation/hardhat-utils/eth";
 
+export type BalanceChangeChecker = (change: bigint) => boolean;
+
 export async function balancesHaveChanged<
   ChainTypeT extends ChainType | string = "generic",
 >(
@@ -13,7 +15,7 @@ export async function balancesHaveChanged<
   txHash: Hash | Promise<Hash>,
   changes: Array<{
     address: Address;
-    amount: bigint;
+    amount: bigint | BalanceChangeChecker;
   }>,
 ): Promise<void> {
   const resolvedTxHash = await txHash;
@@ -57,16 +59,24 @@ export async function balancesHaveChanged<
     }),
   );
 
-  changes.forEach(({ address, amount }, index) => {
+  changes.forEach(({ address, amount: amountOrChecker }, index) => {
     const balanceBefore = beforeBalances[index];
     const balanceAfter = afterBalances[index];
 
     const actualChange = balanceAfter - balanceBefore;
 
-    assert.equal(
-      actualChange,
-      amount,
-      `For address "${address}", expected balance to change by ${amount} (from ${balanceBefore} to ${balanceBefore + amount}), but got a change of ${actualChange} instead.`,
-    );
+    if (amountOrChecker instanceof Function) {
+      assert.ok(
+        amountOrChecker(actualChange),
+        `For address "${address}", balance check failed (balance changed from ${balanceBefore} to ${balanceAfter}).`,
+      );
+    } else {
+      const amount = amountOrChecker;
+      assert.equal(
+        actualChange,
+        amount,
+        `For address "${address}", expected balance to change by ${amount} (from ${balanceBefore} to ${balanceBefore + amount}), but got a change of ${actualChange} instead.`,
+      );
+    }
   });
 }

@@ -1,4 +1,5 @@
 import type { AbiHolder, ErrorArgsOf, EventArgsOf } from "./abi-types.js";
+import type { BalanceChangeChecker } from "./internal/assertions/balances-have-changed.js";
 import type {
   Abi,
   Address,
@@ -30,7 +31,7 @@ export interface HardhatViemAssertions {
     txHash: Hash | Promise<Hash>,
     changes: Array<{
       address: Address;
-      amount: bigint;
+      amount: bigint | BalanceChangeChecker;
     }>,
   ) => Promise<void>;
 
